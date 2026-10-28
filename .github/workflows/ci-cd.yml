@@ -1,0 +1,32 @@
+name: MERN Tic Tac Toe CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install backend dependencies
+        run: npm install --prefix server
+
+      - name: Test backend
+        run: npm test --prefix server
+
+      - name: Install frontend dependencies
+        run: npm install --prefix client
+
+      - name: Build React frontend
+        run: npm run build --prefix client
